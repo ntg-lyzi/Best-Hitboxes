@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.besthitboxes.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": ["EntityHitboxDebugRendererMixin"],
+  "injectors": { "defaultRequire": ${mixin_require} }
+}

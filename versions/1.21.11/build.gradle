@@ -1,0 +1,41 @@
+plugins {
+    id 'fabric-loom' version "${loom_version}"
+}
+
+version = project.mod_version
+group = project.maven_group
+base { archivesName = project.archives_base_name }
+
+def root = file('../..')
+sourceSets {
+    main {
+        java.srcDirs = [new File(root, 'common/src/main/java'), new File(root, "platform/${project.platform}/src/main/java"), new File(root, "platform/${project.compat}/src/main/java")]
+        resources.srcDirs = [new File(root, 'common/src/main/resources')]
+    }
+}
+
+def fabricApiVersion = project.fabric_version
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabricApiVersion}"
+}
+
+processResources {
+    def props = [version: project.version, minecraft_dep: project.minecraft_dep, java_version: project.java_version,
+                 loader_min: project.loader_min, mixin_require: project.mixin_require]
+    inputs.properties props
+    filesMatching(['fabric.mod.json', 'besthitboxes.mixins.json']) { expand props }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = Integer.parseInt(project.java_version)
+    it.options.encoding = 'UTF-8'
+}
+
+java {
+    sourceCompatibility = JavaVersion.toVersion(project.java_version)
+    targetCompatibility = JavaVersion.toVersion(project.java_version)
+}

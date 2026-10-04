@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "besthitboxes",
+  "version": "${version}",
+  "name": "Best Hitboxes",
+  "description": "Improve your Hitboxes",
+  "authors": ["Lyzi"],
+  "license": "MIT",
+  "icon": "assets/besthitboxes/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["com.besthitboxes.BestHitboxesClient"]
+  },
+  "mixins": [
+    { "config": "besthitboxes.mixins.json", "environment": "client" }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_min}",
+    "minecraft": "${minecraft_dep}",
+    "java": ">=${java_version}",
+    "fabric-api": "*"
+  }
+}
